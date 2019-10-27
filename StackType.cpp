@@ -97,6 +97,11 @@ int StackType::getMin()
 {
     return minElt->info;
 }
+
+int StackType::getTop()
+{
+    return topPtr->info;
+}
 void StackType::makeEmpty()
 {
     NodeType * temp;
@@ -110,7 +115,7 @@ void StackType::makeEmpty()
 }
 void StackType::push1(int x)
 {
-    NodeType * newItem, *newMin;
+    NodeType * newItem;
     if (StackType::isFull())
     {
         std::cout << "Stack is full" << std::endl;
@@ -123,14 +128,14 @@ void StackType::push1(int x)
         topPtr = newItem;
         minElt = topPtr;
         listMin.push_front(minElt->info);
-        std::cout << "Item inserted is:" << x << std::endl;
+        std::cout << "First Item inserted is:" << x << std::endl;
     }else if (minElt->info < x)
     {
         newItem = new NodeType;
         newItem->info = x;
         newItem->next = topPtr;
         topPtr = newItem;
-        std::cout << "Item inserted is:" << newItem->info << std::endl;
+        std::cout << "Item inserted bigger than min is:" << newItem->info << std::endl;
     }else
     {
         
@@ -140,7 +145,8 @@ void StackType::push1(int x)
         listMin.push_front(minElt->info);
         newItem->next = topPtr;
         topPtr = newItem;
-        std::cout << "Item inserted is:" << newItem->info << std::endl;
+        std::cout << "Item inserted smaller than min is:" << newItem->info << std::endl;
+        std::cout << "New min inserted is:" << *listMin.begin() << std::endl;
     }
 }
 void StackType::pop1()
@@ -149,25 +155,24 @@ void StackType::pop1()
     {
         std::cout << "Stack is empty" << std::endl;
         return;
-    }
-    
-    NodeType * newItem = new NodeType;
-    newItem = topPtr;
-    topPtr = newItem->next; //topPtr->next
-    
-    for( auto c=listMin.begin(); c !=listMin.end(); c++)
+    }else if(listMin.front() == listMin.back())
     {
-        if (newItem->info == *c)
+        NodeType * newItem = new NodeType;
+        newItem = topPtr;
+        std::cout << "Only one node remains:" << newItem->info << std::endl;
+        topPtr = NULL;
+    }else
+    {
+        NodeType * newItem = new NodeType;
+        newItem = topPtr;
+        topPtr = topPtr->next; //topPtr->next
+
+        if(*listMin.begin() == newItem->info)
         {
-            listMin.erase(c);
+            listMin.erase(listMin.begin());
             minElt->info = *listMin.begin();
-            std::cout << "Top item Removed is:" << newItem->info << std::endl;
-            delete newItem;
-            
-        }else if (newItem->info != *c)
-        {
-            std::cout << "Top item Removed is:" << newItem->info << std::endl;
-            delete newItem;
         }
+        std::cout << "Top item Removed is:" << newItem->info << std::endl;
+        delete newItem;
     }
 }

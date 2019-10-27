@@ -34,6 +34,7 @@ public:
     bool isEmpty();
     bool isFull();
     int getMin();
+    int getTop();
     void makeEmpty();
     
     // other solutions
