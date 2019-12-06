@@ -1,4 +1,4 @@
-/*
+  /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -113,10 +113,14 @@ void StackType::makeEmpty()
     }
         
 }
+/*
+ * Function: push1
+ * This function is to be used only with pop1
+ */
 void StackType::push1(int x)
 {
     NodeType * newItem;
-    if (StackType::isFull())
+    if (isFull())
     {
         std::cout << "Stack is full" << std::endl;
         return;
@@ -170,7 +174,7 @@ void StackType::pop1()
         if(*listMin.begin() == newItem->info)
         {
             listMin.erase(listMin.begin());
-            minElt->info = *listMin.begin();
+             minElt->info = *listMin.begin();
         }
         std::cout << "Top item Removed is:" << newItem->info << std::endl;
         delete newItem;
